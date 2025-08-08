@@ -1,0 +1,21 @@
+FROM node:23.11.0-slim
+
+WORKDIR /usr/src/app
+
+COPY package*.json ./
+
+# Install global dependencies needed for debugging
+RUN npm install -g nodemon ts-node typescript
+
+# Install project dependencies
+RUN npm install
+
+# Rebuild bcrypt
+RUN npm rebuild bcrypt 
+
+COPY . .
+
+EXPOSE 8082 9229
+
+# Use nodemon directly to avoid any npm script issues
+CMD ["nodemon", "-r", "ts-node/register", "src/server.ts"]

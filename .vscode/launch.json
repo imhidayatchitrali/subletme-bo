@@ -1,0 +1,17 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "type": "node",
+        "request": "attach",
+        "name": "Docker: Attach to Node",
+        "remoteRoot": "/usr/src/app",
+        "localRoot": "${workspaceFolder}/subletme_api",
+        "port": 9229,
+        "restart": true,
+        "address": "localhost",
+        "skipFiles": ["<node_internals>/**"]
+      }
+    ]
+  }
+  

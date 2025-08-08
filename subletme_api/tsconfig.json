@@ -1,0 +1,26 @@
+{
+    "compilerOptions": {
+        "target": "es6",
+        "module": "commonjs",
+        "noUnusedLocals": false,
+        "noUnusedParameters": false,
+        "sourceMap": true,
+        "experimentalDecorators": true,
+        "strictPropertyInitialization": false,
+        "esModuleInterop": true,
+        "rootDir": "./src",
+        "outDir": "dist",
+        "typeRoots": ["./node_modules/@types", "./src/types"],
+        "moduleResolution": "node",
+        "removeComments": true,
+        "allowSyntheticDefaultImports": true,
+        "types": ["node", "express", "multer"],  // Add this
+        "declaration": true,           // Add this
+        "strict": true,               // Add this
+    },
+    "include": [                      // Add this section
+        "src/**/*",
+        "src/types/**/*"
+    ],
+    "exclude": ["node_modules", "cdk.out", "dist"]
+}
