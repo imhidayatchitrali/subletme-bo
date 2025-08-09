@@ -17,6 +17,11 @@
         "types": ["node", "express", "multer"],  // Add this
         "declaration": true,           // Add this
         "strict": true,               // Add this
+        "noImplicitAny": false,
+        "noEmitOnError": false
+
+
+
     },
     "include": [                      // Add this section
         "src/**/*",

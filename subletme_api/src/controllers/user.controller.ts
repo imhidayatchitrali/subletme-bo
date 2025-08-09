@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import UserService from '../services/user.service';
-import { IUserUpdateInput } from '../models/user.model';
+import { IUserUpdateInput, Photo } from '../models/user.model';
 import {
     checkForFileAndReturn,
     checkForFilesAndReturn,
@@ -513,6 +513,8 @@ class UserController {
         }
     };
 
+    
+
     public rejectUserRequest = async (req: Request, res: Response) => {
         const methodContext = this.context + ' - rejectUserRequest';
         try {
@@ -775,7 +777,9 @@ class UserController {
             }
 
             const filePath = `users/${userId}`;
-            const updatedPhotos = [];
+            // const updatedPhotos = [];
+            const updatedPhotos: Photo[] = [];
+
 
             // Process each file with its corresponding display order
             for (let i = 0; i < fileData.length; i++) {

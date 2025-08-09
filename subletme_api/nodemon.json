@@ -1,0 +1,9 @@
+{
+  "watch": ["src"],
+  "ext": "ts,json",
+  "ignore": ["src/test/", "dist"],
+  "legacyWatch": true,
+  "exec": "node --inspect=0.0.0.0:9229 -r ts-node/register/transpile-only src/server.ts",
+  "pollingInterval": 100,
+  "verbose": true
+}

@@ -28,6 +28,14 @@ export type IUser = {
     facebook_username?: string;
 };
 
+
+export type Photo = {
+    id: number;
+    url: string;
+    isProfile: boolean;
+    displayOrder: number;
+}
+
 export type IUserInput = {
     id?: string;
     refresh_token?: string;

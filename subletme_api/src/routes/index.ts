@@ -17,11 +17,11 @@ const getAPIRouter = () => {
     const router = express.Router();
     // Health route
     router.get('/health', (req, res) => {
-        res.json({ status: 'UP' });
+        res.json({ status: 'ssP' });
     });
     router.use('/auth', getAuthRoutes());
     router.use('/config', [authMiddleware], getConfigRoutes());
-    router.use('/config', [authMiddleware], getConfigRoutes());
+router.use('/config', [authMiddleware], getConfigRoutes());
     router.use('/version', [apiKeyAuth], getVersionRoutes());
     router.use('/user', [authMiddleware], getUserRoutes());
     router.use('/property', [authMiddleware], getPropertyRoutes());
