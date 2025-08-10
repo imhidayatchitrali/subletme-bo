@@ -27,13 +27,18 @@ services:
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=subletme  # Add this line
+      - POSTGRES_HOST_AUTH_METHOD=trust
+
+
     volumes: 
       - db_data:/var/lib/postgresql/data
-      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
-      # - ./db/backup.sql:/docker-entrypoint-initdb.d/backup.sql
+      # - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./db/backup.sql:/docker-entrypoint-initdb.d/backup.sql
       - ./db/migrations:/migrations
     ports:
       - "5432:5432"
     
 volumes:
   db_data:
+  
