@@ -17,7 +17,7 @@ const getAPIRouter = () => {
     const router = express.Router();
     // Health route
     router.get('/health', (req, res) => {
-        res.json({ status: 'ssP' });
+        res.json({ status: 'Up' });
     });
     router.use('/auth', getAuthRoutes());
     router.use('/config', [authMiddleware], getConfigRoutes());
