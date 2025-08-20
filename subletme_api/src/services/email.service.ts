@@ -42,8 +42,10 @@ class EmailService {
             this.transporter = nodemailer.createTransport({
                 service: 'gmail',
                 auth: {
-                    user: process.env.EMAIL_USER,
-                    pass: process.env.GOOGLE_EMAIL_PASSWORD,
+                    // user: process.env.EMAIL_USER,
+                    user: "hidayat.rehman64@gmail.com",
+                    pass: "zqbblzktpsllnkph",
+                    // pass: process.env.GOOGLE_EMAIL_PASSWORD,
                 },
             }) as nodemailer.Transporter;
 

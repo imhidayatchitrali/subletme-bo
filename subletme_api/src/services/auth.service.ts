@@ -423,7 +423,7 @@ class AuthService {
                     contactValue,
                     code,
                 });
-                await this.client.commit();
+                // await this.client.commit();
                 const queryForMock = `
                     SELECT id, user_id
                     FROM contact_verifications
