@@ -21,7 +21,9 @@ app.get('/health', (req: Request, res: Response) => {
     res.json({ status: 'ok' });
 });
 
-app.use('/api/', [initContextMiddleware], getAPIRouter());
+// app.use('/api/', [initContextMiddleware], getAPIRouter());
+app.use([initContextMiddleware], getAPIRouter());
+
 app.use('*', (_req, res) => {
     res.status(404).json({
         message: 'Not found',
