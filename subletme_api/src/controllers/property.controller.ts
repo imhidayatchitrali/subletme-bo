@@ -93,35 +93,35 @@ class PropertyController {
             });
 
             // Submit all the images and save urls
-            const fileData = checkForFilesAndReturn(
-                req.files ?? req.body.photos,
-            );
-            Logger.info('Processing files', methodContext, {
-                fileCount: fileData.length,
-            });
+            // const fileData = checkForFilesAndReturn(
+            //     req.files ?? req.body.photos,
+            // );
+            // Logger.info('Processing files', methodContext, {
+            //     fileCount: fileData.length,
+            // });
 
-            let indexImage = 0;
-            for (const file of fileData) {
-                const filePath = `properties/${resultId}`;
-                const fileName = `${indexImage + 1}.${file.type}`;
-                Logger.info('Uploading image', methodContext, {
-                    imageIndex: indexImage + 1,
-                    filePath,
-                    fileName,
-                });
+            // let indexImage = 0;
+            // for (const file of fileData) {
+            //     const filePath = `properties/${resultId}`;
+            //     const fileName = `${indexImage + 1}.${file.type}`;
+            //     Logger.info('Uploading image', methodContext, {
+            //         imageIndex: indexImage + 1,
+            //         filePath,
+            //         fileName,
+            //     });
 
-                const url = await uploadPhotoToMinio(
-                    file.buffer,
-                    filePath,
-                    fileName,
-                );
-                Logger.info('Image uploaded successfully', methodContext, {
-                    url,
-                });
+            //     const url = await uploadPhotoToMinio(
+            //         file.buffer,
+            //         filePath,
+            //         fileName,
+            //     );
+            //     Logger.info('Image uploaded successfully', methodContext, {
+            //         url,
+            //     });
 
-                indexImage++;
-                photosUrl.push(url);
-            }
+            //     indexImage++;
+            //     photosUrl.push(url);
+            // }
 
             Logger.info('Saving property photos', methodContext, {
                 photoCount: photosUrl.length,
@@ -723,51 +723,51 @@ class PropertyController {
 
             // Handle photo updates if new photos are provided
             if (req.files || req.body.photos) {
-                const fileData = checkForFilesAndReturn(
-                    req.files ?? req.body.photos,
-                );
-                Logger.info('Processing new files', methodContext, {
-                    fileCount: fileData.length,
-                });
+                // const fileData = checkForFilesAndReturn(
+                //     req.files ?? req.body.photos,
+                // );
+                // Logger.info('Processing new files', methodContext, {
+                //     fileCount: fileData.length,
+                // });
 
                 // Get existing photo count to continue numbering
-                const existingPhotos =
-                    await this.service.getPropertyPhotos(propertyId);
-                let indexImage = existingPhotos.length;
+                // const existingPhotos =
+                //     await this.service.getPropertyPhotos(propertyId);
+                // let indexImage = existingPhotos.length;
 
-                const photosUrl: string[] = [];
+                // const photosUrl: string[] = [];
 
-                for (const file of fileData) {
-                    const filePath = `properties/${propertyId}`;
-                    const fileName = `${indexImage + 1}.${file.type}`;
-                    Logger.info('Uploading image', methodContext, {
-                        imageIndex: indexImage + 1,
-                        filePath,
-                        fileName,
-                    });
+                // for (const file of fileData) {
+                //     const filePath = `properties/${propertyId}`;
+                //     const fileName = `${indexImage + 1}.${file.type}`;
+                //     Logger.info('Uploading image', methodContext, {
+                //         imageIndex: indexImage + 1,
+                //         filePath,
+                //         fileName,
+                //     });
 
-                    const url = await uploadPhotoToMinio(
-                        file.buffer,
-                        filePath,
-                        fileName,
-                    );
-                    Logger.info('Image uploaded successfully', methodContext, {
-                        url,
-                    });
+                //     const url = await uploadPhotoToMinio(
+                //         file.buffer,
+                //         filePath,
+                //         fileName,
+                //     );
+                //     Logger.info('Image uploaded successfully', methodContext, {
+                //         url,
+                //     });
 
-                    indexImage++;
-                    photosUrl.push(url);
-                }
+                //     indexImage++;
+                //     photosUrl.push(url);
+                // }
 
-                if (photosUrl.length > 0) {
-                    Logger.info('Adding new property photos', methodContext, {
-                        photoCount: photosUrl.length,
-                    });
-                    await this.service.savePropertyPhotos(
-                        propertyId,
-                        photosUrl,
-                    );
-                }
+                // if (photosUrl.length > 0) {
+                //     Logger.info('Adding new property photos', methodContext, {
+                //         photoCount: photosUrl.length,
+                //     });
+                //     await this.service.savePropertyPhotos(
+                //         propertyId,
+                //         photosUrl,
+                //     );
+                // }
             }
 
             Logger.info('Property updated successfully', methodContext);
