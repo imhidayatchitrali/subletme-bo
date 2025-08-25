@@ -55,7 +55,13 @@ export const uploadPhotoToMinio = async (
         });
         await minioClient.putObject(bucketName, uniqueFileName, file);
 
-        const fileUrl = `https://${process.env.MINIO_ENDPOINT_PUBLIC}/${bucketName}/${uniqueFileName}`;
+        // Build public URL robustly: respect provided scheme if present, otherwise infer from MINIO_USE_SSL
+        const publicEndpoint = process.env.MINIO_ENDPOINT_PUBLIC || '';
+        const hasScheme = publicEndpoint.startsWith('http://') || publicEndpoint.startsWith('https://');
+        const protocol = process.env.MINIO_USE_SSL === 'true' ? 'https' : 'http';
+        const baseUrl = hasScheme ? publicEndpoint : `${protocol}://${publicEndpoint}`;
+        const trimmedBase = baseUrl.replace(/\/$/, '');
+        const fileUrl = `${trimmedBase}/${bucketName}/${uniqueFileName}`;
         Logger.info(
             'MinioHelper ::: uploadPhotoToMinio ::: Upload successful',
             fileUrl,
