@@ -11,7 +11,8 @@ import getAPIRouter from './routes/index';
 // Configure multer to store files in memory
 export const upload = multer({
     storage: multer.memoryStorage(), // Store files in memory as buffers
-    limits: { fileSize: 5 * 1024 * 1024 }, // 5MB file size limit
+        limits: { fileSize: 50 * 1024 * 1024 }, // 50MB
+        // limits: { fileSize: 5 * 1024 * 1024 }, // 5MB file size limit
 });
 
 app.use(cors());
