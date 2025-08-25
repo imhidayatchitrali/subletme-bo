@@ -16,7 +16,8 @@ services:
       - MINIO_SECRET_KEY=minioadmin123
       - MINIO_USE_SSL=false
       - MINIO_BUCKET=subletme
-      - MINIO_ENDPOINT_PUBLIC=https://3.148.127.92:9000
+      # - MINIO_ENDPOINT_PUBLIC=https://3.148.127.92:9000
+      - MINIO_ENDPOINT_PUBLIC=http://storage.submee.com
       - API_BASE_URL=https://3.148.127.92:8082
       # Database Configuration
       - DB_USER=postgres
@@ -67,6 +68,7 @@ services:
     environment:
       MINIO_ROOT_USER: minioadmin
       MINIO_ROOT_PASSWORD: minioadmin123
+      MINIO_DOMAIN: storage.submee.com
     command: server /data --console-address ":9001"
     volumes:
       - minio_data:/data
