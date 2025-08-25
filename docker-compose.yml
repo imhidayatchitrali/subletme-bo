@@ -16,8 +16,8 @@ services:
       - MINIO_SECRET_KEY=minioadmin123
       - MINIO_USE_SSL=false
       - MINIO_BUCKET=subletme
-      - MINIO_ENDPOINT_PUBLIC=http://localhost:9000
-      - API_BASE_URL=http://localhost:8082
+      - MINIO_ENDPOINT_PUBLIC=https://3.148.127.92:9000
+      - API_BASE_URL=https://3.148.127.92:8082
       # Database Configuration
       - DB_USER=postgres
       - DB_HOST=subletme_db
