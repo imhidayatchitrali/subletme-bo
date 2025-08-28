@@ -1308,18 +1308,18 @@ class UserService {
 
             // Build the query to get a specific user request with photos
             const query = `
-                SELECT 
-                    u.id,
-                    u.bio,
-                    u.first_name,
-                    u.last_name,
-                    u.date_of_birth,
-                    -- Get array of photo URLs from user_photos
-                    ARRAY_AGG(up.photo_url ORDER BY (up.is_profile = true) DESC, up.created_at ASC) FILTER (WHERE up.photo_url IS NOT NULL) AS photo_urls
+               SELECT 
+                u.id,
+                u.bio,
+                u.first_name,
+                u.last_name,
+                u.date_of_birth,
+                ARRAY_AGG(up.photo_url ORDER BY (up.is_profile = true) DESC, up.created_at ASC) 
+                    FILTER (WHERE up.photo_url IS NOT NULL) AS photo_urls
                 FROM users u
-                -- Left join to get user photos
                 LEFT JOIN user_photos up ON u.id = up.user_id
                 WHERE u.id = $1
+                GROUP BY u.id, u.bio, u.first_name, u.last_name, u.date_of_birth;
             `;
 
             Logger.info('Executing query', methodContext, {
