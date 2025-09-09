@@ -9,32 +9,24 @@ services:
       dockerfile: Dockerfile.dev
     restart: always
     environment:
-      # MinIO Configuration
-      - MINIO_ENDPOINT=minio
-      - MINIO_PORT=9000
-      - MINIO_ACCESS_KEY=minioadmin
-      - MINIO_SECRET_KEY=minioadmin123
-      - MINIO_USE_SSL=false
-      - MINIO_BUCKET=subletme
-      # - MINIO_ENDPOINT_PUBLIC=https://3.148.127.92:9000
-      - MINIO_ENDPOINT_PUBLIC=http://storage.submee.com
-      - API_BASE_URL=https://3.148.127.92:8082
-      # Database Configuration
-      - DB_USER=postgres
-      - DB_HOST=subletme_db
-      - DB_PASSWORD=postgres
-      - DB_PORT=5432
-      - DB_NAME=subletme
-      - JWT_SECRET=4BX5LY7pG3C%3M6e3HBJR7D24*fcsCuL*gnkAPo4D7syDgiuxFUfH%We
-
-      # JWT Configuration
-      # - JWT_SECRET=your-jwt-secret-key-here
-      
-      # API Configuration
-      - PORT=8082
-      - VERSION_API_KEY=zPPxUvKrF3AotGgwXjLxykjRo&A6jUTKNqd
+      MINIO_ENDPOINT: ${MINIO_ENDPOINT}
+      MINIO_PORT: ${MINIO_PORT}
+      MINIO_ACCESS_KEY: ${MINIO_ACCESS_KEY}
+      MINIO_SECRET_KEY: ${MINIO_SECRET_KEY}
+      MINIO_USE_SSL: ${MINIO_USE_SSL}
+      MINIO_BUCKET: ${MINIO_BUCKET}
+      MINIO_ENDPOINT_PUBLIC: ${MINIO_ENDPOINT_PUBLIC}
+      API_BASE_URL: ${API_BASE_URL}
+      DB_USER: ${DB_USER}
+      DB_HOST: ${DB_HOST}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_PORT: ${DB_PORT}
+      DB_NAME: ${DB_NAME}
+      JWT_SECRET: ${JWT_SECRET}
+      PORT: ${PORT}
+      VERSION_API_KEY: zPPxUvKrF3AotGgwXjLxykjRo&A6jUTKNqd
     ports:
-      - 8082:8082
+      - "8082:8082"
       - "9229:9229"
     volumes:
       - ./subletme_api:/usr/src/app
@@ -48,10 +40,10 @@ services:
     container_name: subletme_db
     image: postgis/postgis:12-3.5
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=subletme
-      - POSTGRES_HOST_AUTH_METHOD=trust
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_HOST_AUTH_METHOD: trust
     volumes:
       - db_data:/var/lib/postgresql/data
       - ./db/backup.sql:/docker-entrypoint-initdb.d/backup.sql
@@ -66,9 +58,9 @@ services:
       - "9000:9000"  # API
       - "9001:9001"  # Web Console
     environment:
-      MINIO_ROOT_USER: minioadmin
-      MINIO_ROOT_PASSWORD: minioadmin123
-      MINIO_DOMAIN: storage.submee.com
+      MINIO_ROOT_USER: ${MINIO_ACCESS_KEY}
+      MINIO_ROOT_PASSWORD: ${MINIO_SECRET_KEY}
+      MINIO_DOMAIN: ${MINIO_ENDPOINT_PUBLIC}
     command: server /data --console-address ":9001"
     volumes:
       - minio_data:/data
