@@ -10,10 +10,10 @@ services:
     restart: always
     environment:
       MINIO_ENDPOINT: ${MINIO_ENDPOINT}
-      MINIO_PORT: 443
+      MINIO_PORT: ${MINIO_PORT}
       MINIO_ACCESS_KEY: ${MINIO_ACCESS_KEY}
       MINIO_SECRET_KEY: ${MINIO_SECRET_KEY}
-      MINIO_USE_SSL: true
+      MINIO_USE_SSL: ${MINIO_USE_SSL}
       MINIO_BUCKET: ${MINIO_BUCKET}
       MINIO_ENDPOINT_PUBLIC: ${MINIO_ENDPOINT_PUBLIC}
       API_BASE_URL: ${API_BASE_URL}
@@ -58,10 +58,9 @@ services:
       - "9000:9000"  # API
       - "9001:9001"  # Web Console
     environment:
-      MINIO_ROOT_USER: "subletmeadmin"
-      MINIO_ROOT_PASSWORD: "a_very_strong_password_here_123!"
-      MINIO_SERVER_URL: https://storage.submee.com
-      MINIO_BROWSER_REDIRECT_URL: https://storage.submee.com
+      MINIO_ROOT_USER: ${MINIO_ACCESS_KEY}
+      MINIO_ROOT_PASSWORD: ${MINIO_SECRET_KEY}
+      MINIO_DOMAIN: ${MINIO_ENDPOINT_PUBLIC}
     command: server /data --console-address ":9001"
     volumes:
       - minio_data:/data
