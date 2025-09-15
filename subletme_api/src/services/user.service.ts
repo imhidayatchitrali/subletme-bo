@@ -617,7 +617,7 @@ class UserService {
                     COALESCE(u.first_name, '') AS first_name,
                     COALESCE(u.address, '') AS address,
                     COALESCE(u.last_name, '') AS last_name,
-                    COALESCE(TO_CHAR(u.date_of_birth, 'YYYY-MM-DD'), '') AS date_of_birth,,
+                    COALESCE(TO_CHAR(u.date_of_birth, 'YYYY-MM-DD'), '') AS date_of_birth,
                     ST_Distance(u.location, $1) AS distance,
                     ST_AsText(u.location) AS location_text,
                     ST_X(u.location::geometry) AS longitude,
