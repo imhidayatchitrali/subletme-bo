@@ -613,11 +613,11 @@ class UserService {
             let baseQuery = `
                 SELECT 
                     u.id,
-                    COALESCE(u.bio, '') AS bio,
-                    COALESCE(u.first_name, '') AS first_name,
-                    COALESCE(u.address, '') AS address,
-                    COALESCE(u.last_name, '') AS last_name,
-                    COALESCE(TO_CHAR(u.date_of_birth, 'YYYY-MM-DD'), '') AS date_of_birth,
+                    u.bio,
+                    u.first_name,
+                    u.address,
+                    u.last_name,
+                    u.date_of_birth,
                     ST_Distance(u.location, $1) AS distance,
                     ST_AsText(u.location) AS location_text,
                     ST_X(u.location::geometry) AS longitude,
@@ -733,7 +733,7 @@ class UserService {
                 .map((_, index) => `$${index + 1}`)
                 .join(',');
             const photosQuery = `
-                SELECT user_id, COALESCE(photo_url, '') AS photo_url, is_profile
+                SELECT user_id, photo_url, is_profile
                 FROM user_photos
                 WHERE user_id IN (${userIdPlaceholders})
                 ORDER BY user_id, is_profile DESC, created_at
