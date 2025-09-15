@@ -230,65 +230,52 @@ class UserController {
     };
 
     public getUsersNearMe = async (req: Request, res: Response) => {
-    const methodContext = this.context + ' - getUsersNearMe';
-    try {
-        Logger.info('Starting', methodContext, req.query);
+        const methodContext = this.context + ' - getUsersNearMe';
+        try {
+            Logger.info('Starting', methodContext, req.query);
 
-        const id = (req as any).token.userId;
-        Logger.info('User ID', methodContext, { userId: id });
+            const id = (req as any).token.userId;
+            Logger.info('User ID', methodContext, { userId: id });
 
-        const radius = parseNumericParam(
-            req.query.radius as string | undefined,
-        );
+            const radius = parseNumericParam(
+                req.query.radius as string | undefined,
+            );
 
-        const city_ids = parseCityIds(
-            req.query.city_ids as string | undefined,
-        );
+            const city_ids = parseCityIds(
+                req.query.city_ids as string | undefined,
+            );
 
-        const filters = {
-            city_ids,
-            radius,
-        };
+            const filters = {
+                city_ids,
+                radius,
+            };
 
-        Logger.info('Finding users near user with filters', methodContext, {
-            filters,
-            userId: id,
-        });
+            Logger.info('Finding users near user with filters', methodContext, {
+                filters,
+                userId: id,
+            });
 
-        const results = await this.userService.getUsersNearMe(id, filters);
-        
-        // Transform the results to match IUserProfile
-        const transformedUsers = results.users.map((user: any) => ({
-            id: user.id,
-            bio: user.bio,
-            photos: user.photos || [], // Ensure photos is an array
-            first_name: user.first_name,
-            last_name: user.last_name,
-            date_of_birth: user.date_of_birth ? 
-                new Date(user.date_of_birth).toISOString().split('T')[0] : '',
-            distance: user.distance
-        }));
+            const results = await this.userService.getUsersNearMe(id, filters);
+            Logger.info('Found users', methodContext, {
+                userId: id,
+                count: results.users.length,
+            });
 
-        Logger.info('Found users', methodContext, {
-            userId: id,
-            count: transformedUsers.length,
-        });
-
-        res.status(200).json({
-            total: transformedUsers.length,
-            results: transformedUsers, // Use transformed data
-            code: results.code,
-        });
-    } catch (e: any) {
-        Logger.error(
-            e.message || 'Error finding nearby users',
-            methodContext,
-        );
-        res.status(400).json({
-            message: e.message ?? 'Error updating device info',
-        });
-    }
-};
+            res.status(200).json({
+                total: results.users.length,
+                results: results.users,
+                code: results.code,
+            });
+        } catch (e: any) {
+            Logger.error(
+                e.message || 'Error finding nearby users',
+                methodContext,
+            );
+            res.status(400).json({
+                message: e.message ?? 'Error updating device info',
+            });
+        }
+    };
 
     public getUsersSwipes = async (req: Request, res: Response) => {
         const methodContext = this.context + ' - getUsersSwipes';
