@@ -613,7 +613,7 @@ class UserService {
             let baseQuery = `
                 SELECT 
                     u.id,
-                    u.bio,
+                    COALESCE(u.bio, '') AS bio,
                     u.first_name,
                     u.address,
                     u.last_name,
