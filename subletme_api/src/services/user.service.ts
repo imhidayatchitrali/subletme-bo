@@ -610,23 +610,23 @@ class UserService {
             });
 
             // Build the base query
-            let baseQuery = `
-                SELECT 
-                    u.id,
-                    u.bio,
-                    u.first_name,
-                    u.address,
-                    u.last_name,
-                    u.date_of_birth,
-                    ST_Distance(u.location, $1) AS distance,
-                    ST_AsText(u.location) AS location_text,
-                    ST_X(u.location::geometry) AS longitude,
-                    ST_Y(u.location::geometry) AS latitude
-                FROM users u
-                WHERE 
-                    u.id != $2 AND
-                    u.location IS NOT NULL 
-            `;
+           let baseQuery = `
+                    SELECT 
+                        u.id,
+                        COALESCE(u.bio, '') AS bio,
+                        u.first_name,
+                        COALESCE(u.address, '') AS address,
+                        COALESCE(u.last_name, '') AS last_name,
+                        u.date_of_birth,
+                        ST_Distance(u.location, $1) AS distance,
+                        ST_AsText(u.location) AS location_text,
+                        ST_X(u.location::geometry) AS longitude,
+                        ST_Y(u.location::geometry) AS latitude
+                    FROM users u
+                    WHERE 
+                        u.id != $2 AND
+                        u.location IS NOT NULL 
+                `;
 
             const params = [userCoordinates, userId];
 
@@ -733,7 +733,10 @@ class UserService {
                 .map((_, index) => `$${index + 1}`)
                 .join(',');
             const photosQuery = `
-                SELECT user_id, photo_url, is_profile
+                SELECT 
+                    user_id, 
+                    COALESCE(photo_url, '') AS photo_url, 
+                    is_profile
                 FROM user_photos
                 WHERE user_id IN (${userIdPlaceholders})
                 ORDER BY user_id, is_profile DESC, created_at
