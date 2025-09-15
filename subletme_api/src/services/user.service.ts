@@ -733,7 +733,7 @@ class UserService {
                 .map((_, index) => `$${index + 1}`)
                 .join(',');
             const photosQuery = `
-                SELECT user_id, photo_url, is_profile
+                SELECT user_id, COALESCE(photo_url, '') AS photo_url, is_profile
                 FROM user_photos
                 WHERE user_id IN (${userIdPlaceholders})
                 ORDER BY user_id, is_profile DESC, created_at
